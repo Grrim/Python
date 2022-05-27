@@ -1,0 +1,207 @@
+{% load static %}
+
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet"  href="{%  static  'css/base.css'  %}">
+    </head>
+    
+{% if user.is_authenticated %}
+<body style="background-image: url('{% static 'tlo.jpg' %}')";>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <div class="topnav">
+    <div class="logo">
+        <a href="home"><img src="{% static 'anonse.png' %}" width="100" height="33" alt="Logo"/></a>
+        </div>
+        <div class="category">
+        <a href="{% url 'o_nas' %}">O nas</a>
+            <a href="ogłoszenia">Ogłoszenia</a>
+            <a href="kategorie">Kategorie</a>
+            <a href="dodaj_ogłoszenie">Dodaj ogłoszenie</a>
+        <div class="logins">
+            <a class="nav-link dropdown-toggle" href="{% url 'profile' request.user.id %}">
+            {{ user.username }}
+            </a>
+            <a href="logout">Wyloguj</a></div>
+    </div>
+    </div>
+  
+{% if searched %}
+<div class="container">
+        </br>
+        <div class="card">
+            <div class="topnav">
+                <div class="card-header">
+                    <div class="colorek">
+                        <center>Wyszukiwanie ogłoszeń dla "{{ searched }}"</center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <br/>
+    <div class="row">
+        <br/>
+        </br>
+  <div class="container">      
+<div class="row">
+{% for event in announcements %}
+<div class="container">
+<div class="card mb-3" style="width:1110px">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+<img src="media/{{ event.image }}" class="card-img-top" alt="..." width="210" height="210"></div>
+<div class="col-md-8">
+<div class="card-body">
+<div class="text2"><a href="{% url 'ogłoszenie' event.id %}" class="text-dark"><h5 class="card-title">{{ event }}</h5></a></div>
+
+<p class="card-text">
+
+<p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;">{{ event.event_date }}</p> 
+<strong>{{ event.cost }}</strong>
+</p>
+{% if user.id == event.manager.id %}
+    <a href="{% url 'zmodyfikuj_ogłoszenie' event.id %}" class="btn btn-secondary btn-sm">Modyfikuj</a>
+    <a href="{% url 'usuń_ogłoszenie' event.id %}" class="btn btn-danger btn-sm">Usuń</a>
+{% endif %}
+</div>
+</div>
+</div>
+</div>
+</div>
+<br/>
+{% endfor %}
+</div>
+</div>
+
+</br>
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+
+{% for i in nums %}
+<li class="page-item"><a class="page-link" href="?page= {{ forloop.counter }}">{{ forloop.counter }}</a></li>
+{% endfor %}
+
+  </ul>
+</nav>
+<br/>
+</div>
+{% else %}
+<br/>
+<div class="container">
+        </br>
+        <div class="card">
+            <div class="topnav">
+            </div>
+        </div>
+        
+        <div class="card">
+        <div class="colors">
+            <div class="card-header">
+            <center><img src="media/static/comic-characters-g039b4f98e_1280.png" alt="..." width="210" height="210"></center>
+            </br>
+        <div class="alert alert-warning" role="alert">
+            <center>Nie można wyszukać niczego</center>
+        </div>
+        </div></div></div></div>
+{% endif %}
+  
+{% else %}
+<body style="background-image: url('{% static 'tlo.jpg' %}')">
+    <div class="topnav">
+    <div class="logo">
+        <a href="home"><img src="{% static 'anonse.png' %}" width="100" height="33" alt="Logo"/></a>
+        </div>
+        <div class="category">
+            <a href="{% url 'o_nas' %}">O nas</a>
+            <a href="items">Ogłoszenia</a>
+            <a href="category">Kategorie</a>
+            <div class="logins">
+                <a href="register">Rejestracja</a>
+                <a href="login">Logowanie</a>
+            </div>
+        </div>
+    </div>
+
+{% if searched %}
+<div class="container">
+        </br>
+        <div class="card">
+            <div class="topnav">
+                <div class="card-header">
+                    <div class="colorek">
+                        <center>Wyszukiwanie ogłoszeń dla "{{ searched }}"</center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <br/>
+    <div class="row">
+        <br/>
+        </br>
+  <div class="container">      
+<div class="row">
+{% for event in announcements %}
+<div class="container">
+<div class="card mb-3" style="width:1110px">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+<img src="media/{{ event.image }}" class="card-img-top" alt="..." width="210" height="210"></div>
+<div class="col-md-8">
+<div class="card-body">
+<div class="text2"><a href="{% url 'ogłoszenie' event.id %}" class="text-dark"><h5 class="card-title">{{ event }}</h5></a></div>
+
+<p class="card-text">
+
+<p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;">{{ event.event_date }}</p> 
+<strong>{{ event.cost }}</strong>
+</p>
+{% if user.id == event.manager.id %}
+    <a href="{% url 'zmodyfikuj_ogłoszenie' event.id %}" class="btn btn-secondary btn-sm">Modyfikuj</a>
+    <a href="{% url 'usuń_ogłoszenie' event.id %}" class="btn btn-danger btn-sm">Usuń</a>
+{% endif %}
+</div>
+</div>
+</div>
+</div>
+</div>
+<br/>
+{% endfor %}
+</div>
+</div>
+
+</br>
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+
+{% for i in nums %}
+<li class="page-item"><a class="page-link" href="?page= {{ forloop.counter }}">{{ forloop.counter }}</a></li>
+{% endfor %}
+
+  </ul>
+</nav>
+<br/>
+</div>
+{% else %}
+<br/>
+<div class="container">
+        </br>
+        <div class="card">
+            <div class="topnav">
+            </div>
+        </div>
+        
+        <div class="card">
+        <div class="colors">
+            <div class="card-header">
+            <center><img src="media/static/comic-characters-g039b4f98e_1280.png" alt="..." width="210" height="210"></center>
+            </br>
+        <div class="alert alert-warning" role="alert">
+            <center>Nie można wyszukać niczego</center>
+        </div>
+        </div></div></div></div>
+{% endif %}
+
+</html> 
+{% endif %}

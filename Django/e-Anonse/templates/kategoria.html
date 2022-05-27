@@ -1,0 +1,454 @@
+{% load static %}
+
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet"  href="{%  static  'css/base.css'  %}">
+    </head>
+    
+{% if user.is_authenticated %}
+<body style="background-image: url('{% static 'tlo.jpg' %}')";>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <div class="topnav">
+    <div class="logo">
+        <a href="home"><img src="{% static 'anonse.png' %}" width="100" height="33" alt="Logo"/></a>
+        </div>
+        <div class="category">
+            <a href="{% url 'o_nas' %}">O nas</a>
+            <a href="{% url 'ogłoszenia' %}">Ogłoszenia</a>
+            <a href="{% url 'kategorie' %}">Kategorie</a>
+            <a href="{% url 'dodaj_ogłoszenie' %}">Dodaj ogłoszenie</a>
+        <div class="logins">
+            <a class="nav-link dropdown-toggle" href="{% url 'profile' request.user.id %}">
+            {{ user.username }}
+            </a>
+            <a href="logout">Wyloguj</a></div>
+    </div>
+    </div>
+    
+{% if messages %}
+    {% for message in messages %}
+    </br>
+    <div class="container">
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+    </div>
+    {% endfor %}
+{% endif %}
+
+<div class="container">
+        </br>
+        <div class="card">
+            <div class="topnav">
+                <div class="card-header">
+                    <div class="colorek">
+                        <center>Ogłoszenia</center>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+    
+    <div class="row">
+        </br/>
+        {% if request.build_absolute_uri == "http://127.0.0.1:8000/kategoria/1" %}
+            {% for announcement in announcement_list %} 
+                {% if announcement.venue.id == 1 %}
+                    <div class="container">
+                        <div class="card mb-3" style="width:1110px">                       
+                            <div class="row no-gutters">
+                                <div class="col-md-4">
+                                    <img src="/media/{{ announcement.image }}" class="card-img-top" alt="..." width="210" height="210"></div>
+                                    <div class="col-md-8">
+                                    <div class="card-body">
+                                         <div class="text2"><a href="{% url 'ogłoszenie' announcement.id %}" class="text-dark"><h5 class="card-title">{{ announcement }}</h5></a></div>
+                                         <p class="card-text">
+                                         <p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;">{{ announcement.event_date }}</p> 
+                                             <strong>{{ announcement.cost }}</strong>
+                                         </p>
+                                        {% if user.id == announcement.manager.id %}
+                                            <a href="{% url 'zmodyfikuj_ogłoszenie' announcement.id %}" class="btn btn-secondary btn-sm">Modyfikuj</a>
+                                            <a href="{% url 'usuń_ogłoszenie' announcement.id %}" class="btn btn-danger btn-sm">Usuń</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        {% if request.build_absolute_uri == "http://127.0.0.1:8000/kategoria/2" %}
+            {% for announcement in announcement_list %} 
+                {% if announcement.venue.id == 2 %}
+                    <div class="container">
+                        <div class="card mb-3" style="width:1110px">                       
+                            <div class="row no-gutters">
+                                <div class="col-md-4">
+                                    <img src="/media/{{ announcement.image }}" class="card-img-top" alt="..." width="210" height="210"></div>
+                                    <div class="col-md-8">
+                                    <div class="card-body">
+                                         <div class="text2"><a href="{% url 'ogłoszenie' announcement.id %}" class="text-dark"><h5 class="card-title">{{ announcement }}</h5></a></div>
+                                         <p class="card-text">
+                                         <p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;">{{ announcement.event_date }}</p> 
+                                             <strong>{{ announcement.cost }}</strong>
+                                         </p>
+                                        {% if user.id == announcement.manager.id %}
+                                            <a href="{% url 'zmodyfikuj_ogłoszenie' announcement.id %}" class="btn btn-secondary btn-sm">Modyfikuj</a>
+                                            <a href="{% url 'usuń_ogłoszenie' announcement.id %}" class="btn btn-danger btn-sm">Usuń</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        {% if request.build_absolute_uri == "http://127.0.0.1:8000/kategoria/3" %}
+            {% for announcement in announcement_list %} 
+                {% if announcement.venue.id == 3 %}
+                    <div class="container">
+                        <div class="card mb-3" style="width:1110px">                       
+                            <div class="row no-gutters">
+                                <div class="col-md-4">
+                                    <img src="/media/{{ announcement.image }}" class="card-img-top" alt="..." width="210" height="210"></div>
+                                    <div class="col-md-8">
+                                    <div class="card-body">
+                                         <div class="text2"><a href="{% url 'ogłoszenie' announcement.id %}" class="text-dark"><h5 class="card-title">{{ announcement }}</h5></a></div>
+                                         <p class="card-text">
+                                         <p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;">{{ announcement.event_date }}</p> 
+                                             <strong>{{ announcement.cost }}</strong>
+                                         </p>
+                                        {% if user.id == announcement.manager.id %}
+                                            <a href="{% url 'zmodyfikuj_ogłoszenie' announcement.id %}" class="btn btn-secondary btn-sm">Modyfikuj</a>
+                                            <a href="{% url 'usuń_ogłoszenie' announcement.id %}" class="btn btn-danger btn-sm">Usuń</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        
+        {% if request.build_absolute_uri == "http://127.0.0.1:8000/kategoria/4" %}
+            {% for announcement in announcement_list %} 
+                {% if announcement.venue.id == 4 %}
+                    <div class="container">
+                        <div class="card mb-3" style="width:1110px">                       
+                            <div class="row no-gutters">
+                                <div class="col-md-4">
+                                    <img src="/media/{{ announcement.image }}" class="card-img-top" alt="..." width="210" height="210"></div>
+                                    <div class="col-md-8">
+                                    <div class="card-body">
+                                         <div class="text2"><a href="{% url 'ogłoszenie' announcement.id %}" class="text-dark"><h5 class="card-title">{{ announcement }}</h5></a></div>
+                                         <p class="card-text">
+                                         <p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;">{{ announcement.event_date }}</p> 
+                                             <strong>{{ announcement.cost }}</strong>
+                                         </p>
+                                        {% if user.id == announcement.manager.id %}
+                                            <a href="{% url 'zmodyfikuj_ogłoszenie' announcement.id %}" class="btn btn-secondary btn-sm">Modyfikuj</a>
+                                            <a href="{% url 'usuń_ogłoszenie' announcement.id %}" class="btn btn-danger btn-sm">Usuń</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        {% if request.build_absolute_uri == "http://127.0.0.1:8000/kategoria/5" %}
+            {% for announcement in announcement_list %} 
+                {% if announcement.venue.id == 5 %}
+                    <div class="container">
+                        <div class="card mb-3" style="width:1110px">                       
+                            <div class="row no-gutters">
+                                <div class="col-md-4">
+                                    <img src="/media/{{ announcement.image }}" class="card-img-top" alt="..." width="210" height="210"></div>
+                                    <div class="col-md-8">
+                                    <div class="card-body">
+                                         <div class="text2"><a href="{% url 'ogłoszenie' announcement.id %}" class="text-dark"><h5 class="card-title">{{ announcement }}</h5></a></div>
+                                         <p class="card-text">
+                                         <p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;">{{ announcement.event_date }}</p> 
+                                             <strong>{{ announcement.cost }}</strong>
+                                         </p>
+                                        {% if user.id == announcement.manager.id %}
+                                            <a href="{% url 'zmodyfikuj_ogłoszenie' announcement.id %}" class="btn btn-secondary btn-sm">Modyfikuj</a>
+                                            <a href="{% url 'usuń_ogłoszenie' announcement.id %}" class="btn btn-danger btn-sm">Usuń</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        {% if request.build_absolute_uri == "http://127.0.0.1:8000/kategoria/6" %}
+            {% for announcement in announcement_list %} 
+                {% if announcement.venue.id == 6 %}
+                    <div class="container">
+                        <div class="card mb-3" style="width:1110px">                       
+                            <div class="row no-gutters">
+                                <div class="col-md-4">
+                                    <img src="/media/{{ announcement.image }}" class="card-img-top" alt="..." width="210" height="210"></div>
+                                    <div class="col-md-8">
+                                    <div class="card-body">
+                                         <div class="text2"><a href="{% url 'ogłoszenie' announcement.id %}" class="text-dark"><h5 class="card-title">{{ announcement }}</h5></a></div>
+                                         <p class="card-text">
+                                         <p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;">{{ announcement.event_date }}</p> 
+                                             <strong>{{ announcement.cost }}</strong>
+                                         </p>
+                                        {% if user.id == announcement.manager.id %}
+                                            <a href="{% url 'zmodyfikuj_ogłoszenie' announcement.id %}" class="btn btn-secondary btn-sm">Modyfikuj</a>
+                                            <a href="{% url 'usuń_ogłoszenie' announcement.id %}" class="btn btn-danger btn-sm">Usuń</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+
+{% else %}
+<body style="background-image: url('{% static 'tlo.jpg' %}')">
+    <div class="topnav">
+    <div class="logo">
+        <a href="home"><img src="{% static 'anonse.png' %}" width="100" height="33" alt="Logo"/></a>
+        </div>
+        <div class="category">
+            <a href="{% url 'o_nas' %}">O nas</a>
+            <a href="{% url 'ogłoszenia' %}">Ogłoszenia</a>
+            <a href="{% url 'kategorie' %}">Kategorie</a>
+        <div class="logins">
+                <a href="{% url 'register' %}">Rejestracja</a>
+                <a href="{% url 'login' %}">Logowanie</a>
+            </div>
+            </div>
+    </div>
+    </div>
+    
+{% if messages %}
+    {% for message in messages %}
+    </br>
+    <div class="container">
+        <div class="alert alert-success" role="alert">
+            {{ message }}
+        </div>
+    </div>
+    {% endfor %}
+{% endif %}
+
+<div class="container">
+        </br>
+        <div class="card">
+            <div class="topnav">
+                <div class="card-header">
+                    <div class="colorek">
+                        <center>Ogłoszenia</center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <br/>
+    <div class="row">
+        </br/>
+        {% if request.build_absolute_uri == "http://127.0.0.1:8000/kategoria/1" %}
+            {% for announcement in announcement_list %} 
+                {% if announcement.venue.id == 1 %}
+                    <div class="container">
+                        <div class="card mb-3" style="width:1110px">                       
+                            <div class="row no-gutters">
+                                <div class="col-md-4">
+                                    <img src="/media/{{ announcement.image }}" class="card-img-top" alt="..." width="210" height="210"></div>
+                                    <div class="col-md-8">
+                                    <div class="card-body">
+                                         <div class="text2"><a href="{% url 'ogłoszenie' announcement.id %}" class="text-dark"><h5 class="card-title">{{ announcement }}</h5></a></div>
+                                         <p class="card-text">
+                                         <p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;">{{ announcement.event_date }}</p> 
+                                             <strong>{{ announcement.cost }}</strong>
+                                         </p>
+                                        {% if user.id == announcement.manager.id %}
+                                            <a href="{% url 'zmodyfikuj_ogłoszenie' announcement.id %}" class="btn btn-secondary btn-sm">Modyfikuj</a>
+                                            <a href="{% url 'usuń_ogłoszenie' announcement.id %}" class="btn btn-danger btn-sm">Usuń</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        {% if request.build_absolute_uri == "http://127.0.0.1:8000/kategoria/2" %}
+            {% for announcement in announcement_list %} 
+                {% if announcement.venue.id == 2 %}
+                    <div class="container">
+                        <div class="card mb-3" style="width:1110px">                       
+                            <div class="row no-gutters">
+                                <div class="col-md-4">
+                                    <img src="/media/{{ announcement.image }}" class="card-img-top" alt="..." width="210" height="210"></div>
+                                    <div class="col-md-8">
+                                    <div class="card-body">
+                                         <div class="text2"><a href="{% url 'ogłoszenie' announcement.id %}" class="text-dark"><h5 class="card-title">{{ announcement }}</h5></a></div>
+                                         <p class="card-text">
+                                         <p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;">{{ announcement.event_date }}</p> 
+                                             <strong>{{ announcement.cost }}</strong>
+                                         </p>
+                                        {% if user.id == announcement.manager.id %}
+                                            <a href="{% url 'zmodyfikuj_ogłoszenie' announcement.id %}" class="btn btn-secondary btn-sm">Modyfikuj</a>
+                                            <a href="{% url 'usuń_ogłoszenie' announcement.id %}" class="btn btn-danger btn-sm">Usuń</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        {% if request.build_absolute_uri == "http://127.0.0.1:8000/kategoria/3" %}
+            {% for announcement in announcement_list %} 
+                {% if announcement.venue.id == 3 %}
+                    <div class="container">
+                        <div class="card mb-3" style="width:1110px">                       
+                            <div class="row no-gutters">
+                                <div class="col-md-4">
+                                    <img src="/media/{{ announcement.image }}" class="card-img-top" alt="..." width="210" height="210"></div>
+                                    <div class="col-md-8">
+                                    <div class="card-body">
+                                         <div class="text2"><a href="{% url 'ogłoszenie' announcement.id %}" class="text-dark"><h5 class="card-title">{{ announcement }}</h5></a></div>
+                                         <p class="card-text">
+                                         <p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;">{{ announcement.event_date }}</p> 
+                                             <strong>{{ announcement.cost }}</strong>
+                                         </p>
+                                        {% if user.id == announcement.manager.id %}
+                                            <a href="{% url 'zmodyfikuj_ogłoszenie' announcement.id %}" class="btn btn-secondary btn-sm">Modyfikuj</a>
+                                            <a href="{% url 'usuń_ogłoszenie' announcement.id %}" class="btn btn-danger btn-sm">Usuń</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        
+        {% if request.build_absolute_uri == "http://127.0.0.1:8000/kategoria/4" %}
+            {% for announcement in announcement_list %} 
+                {% if announcement.venue.id == 4 %}
+                    <div class="container">
+                        <div class="card mb-3" style="width:1110px">                       
+                            <div class="row no-gutters">
+                                <div class="col-md-4">
+                                    <img src="/media/{{ announcement.image }}" class="card-img-top" alt="..." width="210" height="210"></div>
+                                    <div class="col-md-8">
+                                    <div class="card-body">
+                                         <div class="text2"><a href="{% url 'ogłoszenie' announcement.id %}" class="text-dark"><h5 class="card-title">{{ announcement }}</h5></a></div>
+                                         <p class="card-text">
+                                         <p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;">{{ announcement.event_date }}</p> 
+                                             <strong>{{ announcement.cost }}</strong>
+                                         </p>
+                                        {% if user.id == announcement.manager.id %}
+                                            <a href="{% url 'zmodyfikuj_ogłoszenie' announcement.id %}" class="btn btn-secondary btn-sm">Modyfikuj</a>
+                                            <a href="{% url 'usuń_ogłoszenie' announcement.id %}" class="btn btn-danger btn-sm">Usuń</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        {% if request.build_absolute_uri == "http://127.0.0.1:8000/kategoria/5" %}
+            {% for announcement in announcement_list %} 
+                {% if announcement.venue.id == 5 %}
+                    <div class="container">
+                        <div class="card mb-3" style="width:1110px">                       
+                            <div class="row no-gutters">
+                                <div class="col-md-4">
+                                    <img src="/media/{{ announcement.image }}" class="card-img-top" alt="..." width="210" height="210"></div>
+                                    <div class="col-md-8">
+                                    <div class="card-body">
+                                         <div class="text2"><a href="{% url 'ogłoszenie' announcement.id %}" class="text-dark"><h5 class="card-title">{{ announcement }}</h5></a></div>
+                                         <p class="card-text">
+                                         <p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;">{{ announcement.event_date }}</p> 
+                                             <strong>{{ announcement.cost }}</strong>
+                                         </p>
+                                        {% if user.id == announcement.manager.id %}
+                                            <a href="{% url 'zmodyfikuj_ogłoszenie' announcement.id %}" class="btn btn-secondary btn-sm">Modyfikuj</a>
+                                            <a href="{% url 'usuń_ogłoszenie' announcement.id %}" class="btn btn-danger btn-sm">Usuń</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        {% if request.build_absolute_uri == "http://127.0.0.1:8000/kategoria/6" %}
+            {% for announcement in announcement_list %} 
+                {% if announcement.venue.id == 6 %}
+                    <div class="container">
+                        <div class="card mb-3" style="width:1110px">                       
+                            <div class="row no-gutters">
+                                <div class="col-md-4">
+                                    <img src="/media/{{ announcement.image }}" class="card-img-top" alt="..." width="210" height="210"></div>
+                                    <div class="col-md-8">
+                                    <div class="card-body">
+                                         <div class="text2"><a href="{% url 'ogłoszenie' announcement.id %}" class="text-dark"><h5 class="card-title">{{ announcement }}</h5></a></div>
+                                         <p class="card-text">
+                                         <p style="font-family:georgia,garamond,serif;font-size:16px;font-style:italic;">{{ announcement.event_date }}</p> 
+                                             <strong>{{ announcement.cost }}</strong>
+                                         </p>
+                                        {% if user.id == announcement.manager.id %}
+                                            <a href="{% url 'zmodyfikuj_ogłoszenie' announcement.id %}" class="btn btn-secondary btn-sm">Modyfikuj</a>
+                                            <a href="{% url 'usuń_ogłoszenie' announcement.id %}" class="btn btn-danger btn-sm">Usuń</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+</html> 
+{% endif %}

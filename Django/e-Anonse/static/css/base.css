@@ -1,0 +1,331 @@
+/**/
+
+body {
+  background: #456;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.google {
+  width: 400px;
+  margin: 16px auto;
+  text-align: center;
+  font-size: 18px;
+}
+
+.login {
+  width: 400px;
+  height: 330px;
+  margin: 16px auto;
+  font-size: 16px;
+}
+
+.login-header,
+.login p {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.login-triangle {
+  width: 0;
+  margin-right: auto;
+  margin-left: auto;
+  border: 12px solid transparent;
+  border-bottom-color: #28d;
+}
+
+.login-header {
+  background: #28d;
+  padding: 20px;
+  font-size: 1.4em;
+  font-weight: normal;
+  text-align: center;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.login-container {
+  background: #ebebeb;
+  padding: 12px;
+}
+
+.login p {
+  padding: 12px;
+}
+
+.login input {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  border-width: 1px;
+  border-style: solid;
+  padding: 16px;
+  outline: 0;
+  font-family: inherit;
+  font-size: 0.95em;
+  margin-bottom: 10px;
+}
+
+.login input[type="submit"] {
+  background: #28d;
+  border-color: transparent;
+  margin-top: 25px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.login input[type="submit"]:hover {
+  background: #17c;
+}
+
+.login input[type="submit"]:focus {
+  border-color: #05a;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #3C3C3C;
+  width: 100%;
+}
+
+.topnav a {
+  float: left;
+  display: block;
+  color: white;
+  margin: 0px 0;
+  margin-left: 20px;
+  padding: 16px 18px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.colors {
+    background-color: #C0C0C0;
+}
+
+.category {
+    padding: 2px 18px;
+}
+
+.logins {
+  float: right;
+  margin-right: 30px;
+}
+
+.rectangle {
+  border-style: groove;
+  width: 400px;
+  height: 500px;
+  margin-top: 50px;
+  margin-left: -100px;
+  background: #3C3C3C;
+  float: center;
+  
+}
+
+.profpic {
+  margin-left: 120px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  background: #3C3C3C;
+  float: left;
+  }
+  
+.ogloszenia {
+  border-style: groove;
+  width: 905px;
+  height: 80px;
+  margin-left: -26px;
+  margin-top: -10px;
+  background: #3C3C3C;
+  float: left;
+  }
+  
+.edit_profile {
+  border-style: groove;
+  width: 400px;
+  height: 120px;
+  margin-left: 0px;
+  margin-top: -10px;
+  background: #3C3C3C;
+  }
+
+.rectangle3 {
+  width: 1107px;
+  height: 200px;
+  margin-left: 205px;
+  margin-top: 30px;
+  background: #3C3C3C;
+  
+}
+
+.rectangle4 {
+  width: 1107px;
+  height: 200px;
+  margin-top: 30px;
+  background: #3C3C3C;
+  
+}
+
+
+.rectangle2 {
+  border-style: groove;
+  width: 900px;
+  height: 500px;
+  margin-top: -500px;
+  margin-left: 300px;
+  background: #3C3C3C;
+  float: left;
+}
+
+.form-control:focus {
+  box-shadow: none;
+}
+
+.form-control-underlined {
+  border-width: 0;
+  border-bottom-width: 1px;
+  border-radius: 0;
+  padding-left: 0;
+}
+
+.colorek {
+  color:white;
+  font-family: Garamond , serif;
+  font-size: 30px;
+}
+
+.p {
+  font-size: 14px;
+}
+
+
+.button {
+  background-color: #3C3C3C;
+  border: none;
+  color: black;
+  width: 400px;
+  height: 50px;
+  margin-left: 100px;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.button a:link, a:visited {
+  background-color: #3C3C3C;
+  text-decoration: none;
+  color: white;
+  display: inline-block;
+}
+
+.button a:hover, a:active {
+  background-color: #3C3C3C;
+}
+
+.button1 {
+  background-color: #3C3C3C;
+  border: none;
+  color: black;
+  width: 400px;
+  height: 50px;
+  margin-left: 610px;
+  margin-top: -74px;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.button1 a:link, a:visited {
+  background-color: #3C3C3C;
+  text-decoration: none;
+  color: white;
+  display: inline-block;
+}
+
+.button1 a:hover, a:active {
+  background-color: #3C3C3C;
+}
+
+.button2 {
+  background-color: #3C3C3C;
+  border: none;
+  color: black;
+  width: 400px;
+  height: 50px;
+  margin-left: 353px;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.button2 a:link, a:visited {
+  background-color: #3C3C3C;
+  text-decoration: none;
+  color: white;
+  display: inline-block;
+}
+
+.button2 a:hover, a:active {
+  background-color: #3C3C3C;
+}
+
+.button3 {
+  background-color: #3C3C3C;
+  border: none;
+  color: black;
+  width: 400px;
+  height: 50px;
+  margin-left: 350px;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.button3 a:link, a:visited {
+  background-color: #3C3C3C;
+  text-decoration: none;
+  color: white;
+  display: inline-block;
+}
+
+.button3 a:hover, a:active {
+  background-color: #3C3C3C;
+}
+
+.text {
+  width: 12em;
+  overflow: hidden;
+  white-space: nowrap; 
+  text-overflow: ellipsis; 
+}
+
+.text2 {
+  width: 43em;
+  overflow: hidden;
+  white-space: nowrap; 
+  text-overflow: ellipsis; 
+}
+
+.modal-dialog {
+    margin-left: 455px;
+
+}
+
+.rectangle6 {
+  border-style: groove;
+  width: 1108px;
+  height: 1000px;
+  margin-top: 0px;
+  margin-left: 0px;
+  background: #3C3C3C;
+  float: center;
+  
+}

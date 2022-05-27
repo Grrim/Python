@@ -1,0 +1,121 @@
+{% load static %}
+
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet"  href="{%  static  'css/base.css'  %}">
+    </head>
+    
+{% if user.is_authenticated %}
+<body style="background-image: url('{% static 'tlo.jpg' %}')";>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <div class="topnav">
+    <div class="logo">
+        <a href="home"><img src="{% static 'anonse.png' %}" width="100" height="33" alt="Logo"/></a>
+        </div>
+        <div class="category">
+        <a href="{% url 'o_nas' %}">O nas</a>
+            <a href="ogłoszenia">Ogłoszenia</a>
+            <a href="kategorie">Kategorie</a>
+            <a href="dodaj_ogłoszenie">Dodaj ogłoszenie</a>
+        <div class="logins">
+            <a class="nav-link dropdown-toggle" href="{% url 'profile' request.user.id %}">
+            {{ user.username }}
+            </a>
+            <a href="logout">Wyloguj</a></div>
+    </div>
+    </div>
+    
+    {% if messages %}
+    {% for message in messages %}
+    </br>
+    <div class="container">
+    <div class="alert alert-success" role="alert">
+    {{ message }}
+    </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+    
+    <br/>
+    <div class="container">
+        </br>
+        <div class="card">
+            <div class="topnav">
+                        <div class="rectangle6">
+                        </br>
+                        <p style="margin-top:20px;margin-left:20px;font-family:georgia,garamond,serif;color:white;font-size:30px;font-weight:bold;">Kim jesteśmy?</p>
+                        <p style="font-size:20px;color:white;margin-top:20px;margin-left:20px;font-family:georgia,garamond,serif;">e-Anonse to nowy elektroniczny serwis ogłoszeniowy ułatwiający swoim użytkownikom sprzedaż lub wymianę towarów. Użytkownicy serwisu internetowego „e-Anonse” mogą zamieszczać swoje ogłoszenia oraz nawiązywać kontakty z potencjalnymi klientami. 
+                        </br/>
+                        </br>
+                        Wyszukanie ogłoszenia o sprzedaży konkretnego towaru w prasie codziennej lub przeszukiwanie ofert na licznych platformach sklepów 
+                        internetowych zajmuje za dużo czasu, stąd pomysł na serwis internetowy, zawierający aktualne ogłoszenia o sprzedaży/kupnie lub zamianie, dzięki któremu odwiedzający mogą znaleźć interesującą ich rzecz przy porannej kawie, nie wychodząc z domu.  </p>
+                        <p style="margin-top:20px;margin-left:20px;font-family:georgia,garamond,serif;color:white;font-size:30px;font-weight:bold;">Jak sprzedawać?</p>
+                        <p style="font-size:20px;color:white;margin-top:20px;margin-left:20px;font-family:georgia,garamond,serif;">1. Dodaj ogłoszenie używając formularza znajdującego w pasku nawigacyjnym pod nagłówkiem 'Dodaj ogłoszenie'.  
+                        <br/>
+                        2. Czekaj na wiadomość od potencjalnego nabywcy.
+                        </br>
+                        3. Dogadaj się ze sprzedającym odnośnie odbioru paczki. Spotkaj się z nim osobiście albo wyślij towar pocztą.</p>
+                        <p style="margin-top:20px;margin-left:20px;font-family:georgia,garamond,serif;color:white;font-size:30px;font-weight:bold;">Jak kupować?</p>
+                        <p style="font-size:20px;color:white;margin-top:20px;margin-left:20px;font-family:georgia,garamond,serif;">1. Znajdź ogłoszenie, które Cię interesuje. 
+                        <br/>
+                        2. Wyślij wiadomość do sprzedającego używając opcji 'Wyślij wiadomość' znajdującej się pod ogłoszeniem.
+                        <p style="margin-top:-14px;font-size:18px;color:white;font-family:georgia,garamond,serif;margin-left:40px;">a) W polu 'Odbiorca' należy wpisać nazwę sprzedającego znajdującą się w podglądzie ogłoszenia.
+                        <br/>
+                        b) W polu 'Temat' należy wpisać szczegółowe informacje dotyczące chęci zakupu
+                        </br>
+                        c) W polu 'Treść' należy umieścić wszelkie informacje jakie chcemy przekazać sprzedającemu.
+                        <br/>
+                        <p style="font-size:20px;color:white;margin-top:-15px;margin-left:20px;font-family:georgia,garamond,serif;">3. Spotkaj się ze sprzedającym, zapłać i odbierz towar.</p> 
+                        <p style="margin-top:20px;margin-left:20px;font-family:georgia,garamond,serif;color:white;font-size:30px;font-weight:bold;">Kontakt:</p>
+                        <p style="font-size:20px;color:white;margin-top:20px;margin-left:20px;font-family:georgia,garamond,serif;"> Adres e-mail: eanonse@gmail.com
+                        </div>
+            </div>
+        </div>
+    </div>
+    </br>
+    
+
+{% else %}
+<body style="background-image: url('{% static 'tlo.jpg' %}')">
+    <div class="topnav">
+    <div class="logo">
+        <a href="home"><img src="{% static 'anonse.png' %}" width="100" height="33" alt="Logo"/></a>
+        </div>
+         <div class="category">
+             <a href="{% url 'o_nas' %}">O nas</a>
+            <a href="ogłoszenia">Ogłoszenia</a>
+            <a href="kategorie">Kategorie</a>
+       <div class="logins">
+                <a href="register">Rejestracja</a>
+                <a href="login">Logowanie</a>
+            </div>
+    </div>
+    </div>
+    
+    {% if messages %}
+    {% for message in messages %}
+    </br>
+    <div class="container">
+    <div class="alert alert-success" role="alert">
+    {{ message }}
+    </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+    
+    <br/>
+       <div class="container">
+        </br>
+        <div class="card">
+            <div class="topnav">
+                        <div class="rectangle6"></div>
+            </div>
+        </div>
+    </div>
+    </br>
+    
+</html> 
+{% endif %}
