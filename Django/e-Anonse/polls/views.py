@@ -9,11 +9,12 @@ from django.contrib.auth import authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import PasswordChangeView
 from .models import Announcement, Categorie, Profil
-from .forms import AnnouncementForm, NewUserForm, EditProfileForm, EditProfilePassword, LoginForm
+from .forms import AnnouncementForm, NewUserForm, EditProfileForm, EditProfilePassword, LoginForm, ProfileForm
 from django.core.paginator import Paginator
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 from allauth.account.adapter import DefaultAccountAdapter
+
 ACCOUNT_ADAPTER = 'kvizmaster.adapter.MyAccountAdapter'
 
 class MyAccountAdapter(DefaultAccountAdapter):
@@ -35,14 +36,15 @@ def password_success(request):
 def password_succes(request):
     messages.info(request, "Hasło zmienione pomyslnie") 
     return HttpResponseRedirect('/home')
-
-class UserEditView(generic.UpdateView):
-    form_class = EditProfileForm
-    template_name = 'edit_profile.html'
-    success_url = reverse_lazy('edit_success')
-    
-    def get_object(self):
-        return self.request.user
+   
+def edit_profile(request):
+    profil = Profil.objects.get(pk=request.user.id)
+    form = ProfileForm(request.POST or None, request.FILES or None, instance=profil)
+    if form.is_valid():
+        form.instance.user = request.user
+        form.save()
+        return redirect("edit_success")
+    return render(request, 'edit_profile.html', {'profil':profil,'form':form})
 
 def edit_success(request):
     messages.info(request, "Informacje zmienione pomyslnie") 
@@ -52,20 +54,26 @@ def add_event_view(request, *args, **kwargs):
     submitted = False
     
     if request.method == "POST":
-        form = AnnouncementForm(request.POST, request.FILES)
+        form = AnnouncementForm(request.POST, request.FILES, initial={'avatar': request.user})
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/dodaj_ogłoszenie?submitted=True')
     else:
-        form = AnnouncementForm
+        form = AnnouncementForm(initial={'avatar': request.user})
         if 'submitted' in request.GET:
             submitted = True
             
-    return render(request, 'dodaj_ogłoszenie.html', {'form':form, 'submitted':submitted})
+    return render(request, 'dodaj_ogłoszenie.html', {'avatar': request.user, 'form':form, 'submitted':submitted})
 
 def home_view(request, *args, **kwargsuest):
+    categorie_list = Categorie.objects.all()
+    p = Paginator(Categorie.objects.all(), 8)
+    page = request.GET.get('page')
+    categories = p.get_page(page)
+    nums = "a" * categories.paginator.num_pages
+    
     announcement_list = Announcement.objects.all().order_by('-event_date')[:12:1]
-    return render(request, 'home.html', {"name": request.user.username, 'announcement_list':announcement_list})
+    return render(request, 'home.html', {"name": request.user.username, 'announcement_list':announcement_list,'categorie_list':categorie_list, 'categories':categories, 'nums':nums})
 
 def o_nas_view(request, *args):
     return render(request, 'o_nas.html', {})
@@ -82,7 +90,6 @@ def category_view(request, *args, **kwargs):
     page = request.GET.get('page')
     categories = p.get_page(page)
     nums = "a" * categories.paginator.num_pages
-    
     
     return render(request, 'kategorie.html', {'categorie_list':categorie_list, 'categories':categories, 'nums':nums})
 
@@ -172,7 +179,6 @@ def logout_request(request):
 	logout(request)
 	messages.info(request, "Pomyslnie się wylogowałes") 
 	return redirect("home")
-
 
 def dashboard(request):
     return render(request, 'accounts/dashboard.html', {"name": request.user.first_name})

@@ -11,12 +11,11 @@
 <body style="background-image: url('{% static 'tlo.jpg' %}')">
     <div class="topnav">
     <div class="logo">
-        <a href="home"><img src="{% static 'anonse.png' %}" width="100" height="33" alt="Logo"/></a>
+        <a href="{% url 'home' %}"><img src="{% static 'anonse.png' %}" width="100" height="33" alt="Logo"/></a>
         </div>
         <div class="category">
         <a href="{% url 'o_nas' %}">O nas</a>
             <a href="ogłoszenia">Ogłoszenia</a>
-            <a href="kategorie">Kategorie</a>
             <div class="logins">
                 <a href="register">Rejestracja</a>
                 <a href="login">Logowanie</a>

@@ -39,7 +39,7 @@ urlpatterns = [
     path("kategorie", views.category_view, name='kategorie'),
     path("profile/<int:pk>", views.ShowProfile.as_view(), name='profile'),
     path("profile_items\<profile_id>", views.profile_items_view, name='profile_items'),
-    path("edit_profile", views.UserEditView.as_view(), name="edit_profile"),
+    path("edit_profile", views.edit_profile, name="edit_profile"),
     path("password/", views.PasswordsChangeView.as_view(template_name="edit_password.html"), name="edit_password"),
     path("password_success", views.password_success, name="password_success"),
     path("edit_success", views.edit_success, name="edit_success"),

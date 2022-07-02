@@ -13,18 +13,30 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
     <div class="topnav">
     <div class="logo">
-        <a href="home"><img src="{% static 'anonse.png' %}" width="100" height="33" alt="Logo"/></a>
+        <a href="{% url 'home' %}"><img src="{% static 'anonse.png' %}" width="100" height="33" alt="Logo"/></a>
         </div>
         <div class="category">
             <a href="{% url 'o_nas' %}">O nas</a>
             <a href="{% url 'ogłoszenia' %}">Ogłoszenia</a>
-            <a href="{% url 'kategorie' %}">Kategorie</a>
-            <a href="{% url 'dodaj_ogłoszenie' %}">Dodaj ogłoszenie</a>
         <div class="logins">
-            <a class="nav-link dropdown-toggle" href="{% url 'profile' request.user.id %}">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {{ user.username }}
             </a>
-            <a href="logout">Wyloguj</a></div>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" style="color:black;font-weight: bold;" href="dodaj_ogłoszenie">Dodaj ogłoszenie</a>
+          <a class="dropdown-item" style="color:black;" href="{% url 'edit_profile' %}">Zmień zdjęcie profilowe</a>
+          <a class="dropdown-item" style="color:black;" href="{% url 'edit_password' %}">Zmień hasło</a>
+          <a class="dropdown-item" style="color:black;" href="{% url 'profile_items' user.id %}">Zobacz swoje ogłoszenia</a>
+          <a class="dropdown-item" style="color:black;" href="{% url 'postman:inbox' %}">Wiadomosci</a>
+          <div class="dropdown-divider"></div>
+          {% if request.user.id == 1 %}
+          <a class="dropdown-item" style="color:black;" href="/admin">Panel administratora</a>
+          {% endif %}
+          <a class="dropdown-item" style="color:black;" href="logout">Wyloguj</a>
+        </div>
+      </li>
+      </div>
     </div>
     </div>
   
@@ -69,7 +81,6 @@
         <div class="category">
             <a href="{% url 'o_nas' %}">O nas</a>
             <a href="{% url 'ogłoszenia' %}">Ogłoszenia</a>
-            <a href="{% url 'kategorie' %}">Kategorie</a>
         <div class="logins">
                 <a href="{% url 'register' %}">Rejestracja</a>
                 <a href="{% url 'login' %}">Logowanie</a>

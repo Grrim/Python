@@ -4,8 +4,6 @@ from django.contrib.auth.models import User
 from django.forms import ModelForm
 from .models import Announcement, Profil
 
-
-
 # Create your forms here.
 
 class NewUserForm(UserCreationForm):
@@ -14,7 +12,7 @@ class NewUserForm(UserCreationForm):
     
     class Meta:
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
+        fields = ('username', 'email', 'password1', 'password2')
     
     def __init__(self, *args, **kwargs):
         super(NewUserForm, self).__init__(*args,**kwargs)
@@ -31,16 +29,18 @@ class LoginForm(AuthenticationForm):
         fields = ('username','password')
         
 class EditProfileForm(UserChangeForm):
-    email = forms.EmailField(required=True)
-    first_name = forms.CharField(label="Imię", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    last_name = forms.CharField(label="Nazwisko", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
-    username = forms.CharField(label="Nazwa użytkownika", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    email = forms.EmailField(label="E-mail", required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
+
     password = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'class': 'form-control', 'type':'hidden'}))
     
     class Meta:
-        model = User
-        fields = ('username', 'first_name', 'last_name', 'email')
+        model = Profil
+        fields = ('email', 'prof_picture')
         
+        labels = {
+            'email': '',
+            'zdjecie': 'Zdjęcie',
+            }
         
 class EditProfilePassword(PasswordChangeForm):
     old_password = forms.CharField(label="Podaj stare hasło", widget=forms.PasswordInput(attrs={'class': 'form-control', 'type':'password'}))
@@ -55,7 +55,7 @@ class EditProfilePassword(PasswordChangeForm):
 class AnnouncementForm(ModelForm):
     class Meta:
         model = Announcement
-        fields = ('name', 'venue', 'manager', 'cost', 'image', 'description')
+        fields = ('name', 'venue', 'manager', 'cost', 'image', 'description', 'avatar')
         
         labels = {
             'name': '',
@@ -65,27 +65,35 @@ class AnnouncementForm(ModelForm):
             'cost': '',
             'image': 'Zdjęcie',
             'description': '',
+            'avatar': '',
             }
         
         widgets = {
             'name': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Nazwa'}),
             'event_date': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Event date'}),
-            'venue': forms.Select(attrs={'class':'form-select', 'placeholder':'Venue'}),
+            'venue': forms.Select(attrs={'class':'form-select'}),
             'manager':forms.TextInput(attrs={'class':'form-control', 'value':'', 'id':'elder', 'type':'hidden'}),
             'cost': forms.TextInput(attrs={'class':'form-control', 'placeholder':'Cena'}),
             'description': forms.Textarea(attrs={'class':'form-control', 'placeholder':'Opis'}),
+            'avatar':forms.TextInput(attrs={'class':'form-control', 'value':'', 'id':'elder', 'type':'hidden'}),
             }    
         
 class UserForm(forms.ModelForm):
+    zdjęcie = forms.ImageField(required=False)
+    
     class Meta:
         model = User
-        fields = ('username','first_name', 'last_name', 'email')
+        fields = ('username','first_name', 'last_name', 'email', 'zdjęcie')
         
-class ProfileForm(forms.ModelForm):
+        
+class ProfileForm(ModelForm):
+    
     class Meta: 
         model = Profil
-        fields = ('first_name','prof_picture')
-
+        fields = ('prof_picture',)
         
+        labels = {
+            'prof_picture': 'Zdjęcie',
+            }
 
     

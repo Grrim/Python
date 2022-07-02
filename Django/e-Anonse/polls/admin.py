@@ -5,4 +5,5 @@ admin.site.register(Announcement)
 admin.site.register(Categorie)
 admin.site.register(Profil)
 
+
 # Register your models here.
