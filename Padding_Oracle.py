@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Nov 14 19:39:50 2023
-
-@author: HP
-"""
-
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad, unpad
 
@@ -46,9 +39,7 @@ def find_bytes(blocks):
             to_test = c_prime + blocks[1]
             try:
                 Decryption(to_test, key, iv)
-                #print(Decryption(to_test, key, iv))
                 plaintext_bytes[15 - i] = (byte ^ (i + 1) ^ blocks[0][15 - i])
-                #print((byte ^ (i + 1) ^ blocks[0][15 - i]))
                 break
             except ValueError:
                 pass
