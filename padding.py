@@ -1,3 +1,10 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Nov 14 14:54:41 2023
+@author: HP
+"""
+
+import base64
 from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad, unpad
 import random
@@ -12,19 +19,13 @@ def Encryption(plainText, key, iv):
     padding = pad(plainText, AES.block_size)
     cipher = AES.new(key, AES.MODE_CBC, iv)
     ciphertext = cipher.encrypt(padding)
-    print(padding)
+    print(ciphertext)
     return ciphertext
 
 def Decryption(cipherText, key, iv):
     cipher = AES.new(key, AES.MODE_CBC, iv)
-    decrypted_data = unpad(cipher.decrypt(cipherText), AES.block_size)
-    return decrypted_data
-
-def get_intermediate_state(cipherText, key, iv, block_index):
-    decipher = AES.new(key, AES.MODE_CBC, iv)
-    last_block = cipherText[block_index * 16:(block_index + 1) * 16]
-    intermediate_state = decipher.decrypt(last_block)
-    return intermediate_state
+    decrypted_data = cipher.decrypt(cipherText)
+    return is_valid_padding(decrypted_data)
 
 def is_valid_padding(data):
     try:
@@ -32,36 +33,53 @@ def is_valid_padding(data):
         unpad(data, AES.block_size)
         return True
     except ValueError:
+        # W przypadku błędnego paddingu zgłaszamy wyjątek
         return False
+   
+def get_intermediate_state(cipherText, key, iv, block_index):
+    decipher = AES.new(key, AES.MODE_CBC, iv)
+    last_block = cipherText[block_index * 16:(block_index + 1) * 16]
+    intermediate_state = decipher.decrypt(last_block)
+    return intermediate_state
 
-key = b'\xbe\xcc\xe7\x85\xc2a\x8d\xed\xf5\xc4\xdb6\xc3\xa8#W'
-iv = b'\xc1\xf7\x80G\x17\x03\x9b\xfb\xadl\xd8\x82H=h\x0b'
+def split_blocks(data):
+    length = len(data)
+    blocks = []
+    for i in range(length // 16):
+        blocks.append(data[i * 16:(i + 1) * 16])
+    return blocks
 
-text = "Kryptologia semestr zimowy 2021/2022, znowu stacjonarnie w 119 WI2 :) :)"
+def find_last_byte(ciphertext):
+    ciphertext = bytearray(base64.b64decode(ciphertext))
+    blocks = split_blocks(ciphertext)
+    
+    c_prime = bytearray([b for b in blocks[0]])
+    
+    plaintext_bytes = bytearray(0 for _ in range(16))
+    
+    for i in range(16):
+        
+        excepted_padding =  bytearray([0 for _ in range(16 - i)] + [(i + 1) for _ in range(i)])
+        
+        for byte in list(range(blocks[0][15-i] + 1, 256)) + list(range(0, blocks[0][15-i] + 1)):
+            c_prime[15-i] = byte
+            to_test = base64.b64encode(c_prime + blocks[1])
+            
+            try:
+                if Decryption(base64.b64decode(to_test), key, iv):
+                    plaintext_bytes = (byte ^ 0x01 ^ blocks[0][15])
+                    break
+            except ValueError:
+                pass
+
+    print(''.join([chr(b) for b in plaintext_bytes if b > 16]))
+
+
+key = IV()
+iv = IV()
+
+text = "abcdefghijklmnoabcdefghijklmnop"
+
 cipherText = Encryption(text.encode(), key, iv)
-# Konwertuj zaszyfrowany tekst na reprezentację szesnastkową w blokach 16 bajtów
-cipherText_hex_blocks = [cipherText[i:i+16].hex() for i in range(0, len(cipherText), 16)]
-
-# Wyświetl zaszyfrowany tekst w formie bloków heksadecymalnych
-for block in cipherText_hex_blocks:
-    print(block)
-
-block_index = len(cipherText) // 16 - 1  # Ostatni blok
-
-# Pobieranie stanu pośredniego ostatniego bloku
-intermediate_state = get_intermediate_state(cipherText, key, iv, block_index)
-
-# Operacja XOR z wartościami od 0 do 255
-valid_padding_values = []
-for i in range(256):
-    modified_state = bytes([intermediate_state[0] ^ i]) + intermediate_state[1:]
-    modified_block = AES.new(key, AES.MODE_CBC, iv).encrypt(modified_state)
-    modified_ciphertext = (
-        cipherText[:block_index * 16] +
-        modified_block +
-        cipherText[(block_index + 1) * 16:]
-    )
-    if is_valid_padding(modified_ciphertext):
-        valid_padding_values.append(i)
-
-print("Wartości z poprawnym paddingiem:", valid_padding_values)
+print(cipherText)
+print(find_last_byte(base64.b64encode(cipherText)))  # Odpalamy funkcję z base64 zakodowanym ciphertextem
